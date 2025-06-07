@@ -520,7 +520,7 @@ class MemvidEncoder:
             "total_characters": sum(len(chunk) for chunk in self.chunks),
             "avg_chunk_size": np.mean([len(chunk) for chunk in self.chunks]) if self.chunks else 0,
             "docker_status": docker_status,
-            "supported_codecs": list(self.config["codec_parameters"].keys()),
+            "supported_codecs": list(get_codec_parameters().keys()),
             "config": self.config
         }
 

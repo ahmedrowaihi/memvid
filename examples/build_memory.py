@@ -6,11 +6,10 @@ Example: Create video memory and index from text data
 import sys
 import os
 
-from memvid.config import VIDEO_FILE_TYPE
-
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from memvid import MemvidEncoder
+from memvid.config import get_default_config, get_codec_parameters
 import time
 
 
@@ -72,7 +71,13 @@ def main():
     output_dir = "output"
     os.makedirs(output_dir, exist_ok=True)
     
-    video_file = os.path.join(output_dir, f"memory.{VIDEO_FILE_TYPE}]")
+    # Get video file type from codec parameters
+    config = get_default_config()
+    codec = config.get("codec", "h264")
+    codec_params = get_codec_parameters(codec)
+    video_file_type = codec_params.get("video_file_type", "mkv")
+    
+    video_file = os.path.join(output_dir, f"memory.{video_file_type}")
     index_file = os.path.join(output_dir, "memory_index.json")
     
     print(f"\nBuilding video: {video_file}")
